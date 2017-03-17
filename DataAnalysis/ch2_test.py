@@ -18,6 +18,7 @@ studir = os.path.join(os.getcwd(), 'test')
 funnames = set(cases.keys())
 
 # 遍历目录
+
 for root, dirs, files in os.walk(studir, topdown=True):
     # 查找py文件
     for name in files:
@@ -31,15 +32,18 @@ for root, dirs, files in os.walk(studir, topdown=True):
             testfunc = funnames & set(dir(stufun))
             for fun in testfunc:
                 print(fun)
-                # 该函数所对应的输入参数
-                for arg in cases[fun]:
-                    print(arg)
-                    # 如果有多个输入参数
-                    if len(inspect.signature(eval(fun)).parameters.values()) < 2:
-                        print('result: ', eval(fun)(arg) == eval('stufun.' + fun)(arg))
-                    else:
-                        print('result: ', eval(fun)(arg[0], arg[1]) == eval('stufun.' + fun)(arg[0], arg[1]))
-            sys.path.remove(root)
-            exec('del stufun')
+                try:
+                    # 该函数所对应的输入参数
+                    for arg in cases[fun]:
+                        print(arg)
+                        # 如果有多个输入参数
+                        if len(inspect.signature(eval(fun)).parameters.values()) < 2:
+                            print('result: ', eval(fun)(arg) == eval('stufun.' + fun)(arg))
+                        else:
+                            print('result: ', eval(fun)(arg[0], arg[1]) == eval('stufun.' + fun)(arg[0], arg[1]))
+                except:
+                    print('======')
+    sys.path.remove(root)
+    exec('del stufun')
 
-# input('Press any key to exit!')
+    # input('Press any key to exit!')
