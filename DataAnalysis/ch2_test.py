@@ -3,43 +3,37 @@
 import os
 import sys
 
-sys.path.append("./test")
-exec('import test4 as ta')
-lf = {  # 'create_list',
-    0: 'what_sign',
-    1: 'fizzbuzz'}
-cases = {'what_sign': {3: 'Positive', 0: 'Zero', -3: 'Negative'}
+from ch2A import *
+
+cases = {'what_sign': [3, 0, -3],
+         'fizzbuzz': [3, 15, 100],
+         'remove_indices': [[['a', 'b', 'c', 'd', 'e'], [0]], [['a', 'b', 'c', 'd', 'e'], [1, 2]],
+                            [['a', 'b', 'c', 'd', 'e'], [1, 4]]],
+         'create_sequence': [12, 100, 1000],
+         'add_5_to_values': [[1], [1, 4, 5]]
          }
-for i, fn in lf.items():
-    if fn in dir(ta):
-        exec('f = ta.' + fn)
-        print(f([10]))
-        print(i, fn)
 
+studir = os.path.join(os.getcwd(), 'test')
+funnames = set(cases.keys())
 
-# exec('del ta')
-# exec('testa = ta.create_list')
-# sys.path.remove("./test")
-# exec('del ta')
+# 遍历目录
+for root, dirs, files in os.walk(studir, topdown=True):
+    # 查找py文件
+    for name in files:
+        stuno, ext = os.path.splitext(name)
+        # 找到后，准备导入
+        if ext == '.py':
+            sys.path.append(root)
+            exec('import ' + stuno + ' as stufun')
+            # 取得该学生所写的函数名集合
+            testfunc = funnames & set(dir(stufun))
+            for fun in testfunc:
+                # 该函数所对应的输入参数
+                for arg in cases[fun]:
+                    # 如果有多个输入参数
+                    if type(arg) != list:
+                        print(eval(fun)(arg) == eval('stufun.' + fun)(arg))
+            sys.path.remove(root)
+            exec('del stufun')
 
-def walk_dir(dir, topdown=True):
-    for root, dirs, files in os.walk(dir, topdown):
-        for name in files:
-            ext = os.path.splitext(name)[1]
-            if ext == '.py':
-                pass
-        pass
-    pass
-
-
-    #
-    #
-    # print(testa() == ['A', 'B', 'C'])
-    # print(sys.path)
-    # sys.path.append("./test")
-    # print(sys.path)
-    # sys.path.remove("./test")
-    # print(sys.path)
-
-
-t = {0, [(None, [1, 2, 3]), (None, [2, 3, 4])]}
+# input('Press any key to exit!')
