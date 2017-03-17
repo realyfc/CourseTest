@@ -40,3 +40,6 @@ def walk_dir(dir, topdown=True):
     # print(sys.path)
     # sys.path.remove("./test")
     # print(sys.path)
+
+
+t = {0, [(None, [1, 2, 3]), (None, [2, 3, 4])]}
