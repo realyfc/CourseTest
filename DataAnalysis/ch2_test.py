@@ -6,7 +6,10 @@ import sys
 sys.path.append("./test")
 exec('import test4 as ta')
 lf = {  # 'create_list',
-    '0': 'get_divisble_by_5'}
+    0: 'what_sign',
+    1: 'fizzbuzz'}
+cases = {'what_sign': {3: 'Positive', 0: 'Zero', -3: 'Negative'}
+         }
 for i, fn in lf.items():
     if fn in dir(ta):
         exec('f = ta.' + fn)
@@ -18,9 +21,6 @@ for i, fn in lf.items():
 # exec('testa = ta.create_list')
 # sys.path.remove("./test")
 # exec('del ta')
-
-
-# eval('from ' + 'test4 ' + 'import  *')
 
 def walk_dir(dir, topdown=True):
     for root, dirs, files in os.walk(dir, topdown):
