@@ -1,1 +1,2 @@
 # CourseTest
+关于课程考试的自动化批改的python脚本
