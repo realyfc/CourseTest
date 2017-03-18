@@ -8,8 +8,7 @@ def what_sign(n):
     if n > 0:
         return 'Positive'
     elif n < 0:
-        retur
-        'Negative'
+        return 'Negative'
     else:
         return 'Zero'
 

@@ -30,9 +30,9 @@ for root, dirs, files in os.walk(studir, topdown=True):
             exec('import ' + stuno + ' as stufun')
             # 取得该学生所写的函数名集合
             testfunc = funnames & set(dir(stufun))
-            for fun in testfunc:
-                print(fun)
-                try:
+            try:
+                for fun in testfunc:
+                    print(fun)
                     # 该函数所对应的输入参数
                     for arg in cases[fun]:
                         print(arg)
@@ -41,8 +41,8 @@ for root, dirs, files in os.walk(studir, topdown=True):
                             print('result: ', eval(fun)(arg) == eval('stufun.' + fun)(arg))
                         else:
                             print('result: ', eval(fun)(arg[0], arg[1]) == eval('stufun.' + fun)(arg[0], arg[1]))
-                except:
-                    print('======')
+            except:
+                print('======')
     sys.path.remove(root)
     exec('del stufun')
 
